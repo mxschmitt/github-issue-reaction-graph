@@ -19,6 +19,19 @@ async function updateGraph() {
     return;
   }
 
+  // Fetch issue details
+  const issueDetails = await octokit.request("GET /repos/{owner}/{repo}/issues/{issue_number}", {
+    owner,
+    repo,
+    issue_number,
+  });
+
+  // Extract issue title, HTML URL, and creation timestamp
+  const { title, html_url, created_at } = issueDetails.data;
+
+  // Display issue information
+  displayIssueInformation(title, html_url, created_at);
+
   const reactionList = await octokit.paginate("GET /repos/{owner}/{repo}/issues/{issue_number}/reactions", {
     owner,
     repo,
@@ -63,6 +76,17 @@ async function updateGraph() {
     }
   });
   document.querySelector<HTMLDivElement>('#app')!.innerHTML = 'loaded'
+}
+
+function displayIssueInformation(title: string, html_url: string, created_at: string): void {
+  const issueInfoDiv = document.createElement('div');
+  issueInfoDiv.id = 'issue-information';
+  issueInfoDiv.innerHTML = `
+    <h2>${title}</h2>
+    <p>Created at: ${Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(new Date(created_at))}</p>
+    <a href="${html_url}" target="_blank">View on GitHub</a>
+  `;
+  document.body.insertBefore(issueInfoDiv, document.getElementById('app'));
 }
 
 window.addEventListener('load', () => {
