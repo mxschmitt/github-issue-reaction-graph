@@ -4,15 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-    <style>
-      #issue-information {
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      }
-    </style>
+    <title>Issue Reaction Graph</title>
   </head>
   <body>
     <div id="app">
@@ -20,10 +12,12 @@
         <input type="text" id="owner" value="microsoft" required />
         <input type="text" id="repo" value="playwright" required />
         <input type="number" id="issue_number" value="28863" required />
-        <button  type="submit">Update Graph</button>
+        <button type="submit">Update Graph</button>
       </form>
     </div>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <div id="canvas-wrapper">
+      <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

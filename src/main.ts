@@ -60,6 +60,8 @@ async function updateGraph() {
       datasets: datasets,
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       scales: {
         y: {
           beginAtZero: true
@@ -75,7 +77,6 @@ async function updateGraph() {
       }
     }
   });
-  document.querySelector<HTMLDivElement>('#app')!.innerHTML = 'loaded'
 }
 
 function displayIssueInformation(title: string, html_url: string, created_at: string): void {

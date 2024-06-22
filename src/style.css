@@ -22,11 +22,15 @@ a:hover {
   color: #535bf2;
 }
 
-body {
+body, html {
   margin: 0;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 h1 {
@@ -92,4 +96,18 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+#issue-information {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#canvas-wrapper {
+  flex-grow: 1; /* Takes the remaining space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
