@@ -9,6 +9,8 @@ const MyOctokit = Octokit.plugin(paginateRest);
 
 const octokit = new MyOctokit({})
 
+let chart: Chart<any> | null = null;
+
 async function updateGraph() {
   const owner = (document.getElementById('owner') as HTMLInputElement).value;
   const repo = (document.getElementById('repo') as HTMLInputElement).value;
@@ -54,7 +56,11 @@ async function updateGraph() {
   });
 
   const ctx = (document.getElementById('myChart')! as HTMLCanvasElement).getContext('2d')!;
-  new Chart(ctx, {
+  
+  if (chart)
+    chart.destroy();
+
+  chart = new Chart(ctx, {
     type: 'line',
     data: {
       datasets: datasets,
@@ -80,6 +86,9 @@ async function updateGraph() {
 }
 
 function displayIssueInformation(title: string, html_url: string, created_at: string): void {
+  if (document.getElementById('issue-information'))
+    document.getElementById('issue-information')!.remove();
+
   const issueInfoDiv = document.createElement('div');
   issueInfoDiv.id = 'issue-information';
   issueInfoDiv.innerHTML = `
