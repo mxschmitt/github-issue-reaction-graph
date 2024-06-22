@@ -7,7 +7,12 @@
     <title>Vite + TS</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <input type="text" id="owner" placeholder="microsoft" />
+      <input type="text" id="repo" placeholder="playwright" />
+      <input type="number" id="issue_number" placeholder="28863" value="28863" />
+      <button id="updateGraph">Update Graph</button>
+    </div>
     <canvas id="myChart" width="400" height="400"></canvas>
     <script type="module" src="/src/main.ts"></script>
   </body>
