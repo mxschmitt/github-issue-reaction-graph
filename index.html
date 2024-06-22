@@ -8,10 +8,12 @@
   </head>
   <body>
     <div id="app">
-      <input type="text" id="owner" placeholder="microsoft" />
-      <input type="text" id="repo" placeholder="playwright" />
-      <input type="number" id="issue_number" placeholder="28863" value="28863" />
-      <button id="updateGraph">Update Graph</button>
+      <form>
+        <input type="text" name='test' id="owner" value="microsoft" required />
+        <input type="text" id="repo" value="playwright" required />
+        <input type="number" id="issue_number" value="28863" required />
+        <button  type="submit">Update Graph</button>
+      </form>
     </div>
     <canvas id="myChart" width="400" height="400"></canvas>
     <script type="module" src="/src/main.ts"></script>

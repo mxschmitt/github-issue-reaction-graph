@@ -9,11 +9,15 @@ const MyOctokit = Octokit.plugin(paginateRest);
 
 const octokit = new MyOctokit({})
 
-// Fetch and update the graph based on user input
 async function updateGraph() {
-  const owner = (document.getElementById('owner') as HTMLInputElement).value || 'microsoft';
-  const repo = (document.getElementById('repo') as HTMLInputElement).value || 'playwright';
-  const issue_number = parseInt((document.getElementById('issue_number') as HTMLInputElement).value) || 28863;
+  const owner = (document.getElementById('owner') as HTMLInputElement).value;
+  const repo = (document.getElementById('repo') as HTMLInputElement).value;
+  const issue_number = parseInt((document.getElementById('issue_number') as HTMLInputElement).value);
+
+  if (!owner || !repo || !issue_number) {
+    alert('Please fill in all fields');
+    return;
+  }
 
   const reactionList = await octokit.paginate("GET /repos/{owner}/{repo}/issues/{issue_number}/reactions", {
     owner,
@@ -26,17 +30,15 @@ async function updateGraph() {
     [reaction.content]: [...(acc[reaction.content] || []), reaction]
   }), {} as Record<string, typeof reactionList>);
 
-  // Assuming `reactions` is your data object from the previous code
-  const labels = Object.keys(reactions); // Reaction types as labels
+  const labels = Object.keys(reactions); 
   const datasets = labels.map(label => {
     return {
       label: label,
-      data: reactions[label].map((reaction, i) => ({ x: reaction.created_at, y: i })), // Reaction counts as data
+      data: reactions[label].map((reaction, i) => ({ x: reaction.created_at, y: i })), 
       fill: false,
       borderColor: getRandomColor(), // A function to generate a random color for each line
     };
   });
-  console.log(datasets)
 
   const ctx = (document.getElementById('myChart')! as HTMLCanvasElement).getContext('2d')!;
   new Chart(ctx, {
@@ -60,12 +62,15 @@ async function updateGraph() {
       }
     }
   });
+  document.querySelector<HTMLDivElement>('#app')!.innerHTML = 'loaded'
 }
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = 'loaded'
-
-// Add event listener to the update graph button
-document.getElementById('updateGraph')!.addEventListener('click', updateGraph);
+window.addEventListener('load', () => {
+  document.querySelector('form')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+    updateGraph()
+  });
+});
 
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
