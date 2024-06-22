@@ -78,12 +78,12 @@ async function updateGraph() {
   document.querySelector<HTMLDivElement>('#app')!.innerHTML = 'loaded'
 }
 
-function displayIssueInformation(title, html_url, created_at) {
+function displayIssueInformation(title: string, html_url: string, created_at: string): void {
   const issueInfoDiv = document.createElement('div');
   issueInfoDiv.id = 'issue-information';
   issueInfoDiv.innerHTML = `
     <h2>${title}</h2>
-    <p>Created at: ${created_at}</p>
+    <p>Created at: ${Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(new Date(created_at))}</p>
     <a href="${html_url}" target="_blank">View on GitHub</a>
   `;
   document.body.insertBefore(issueInfoDiv, document.getElementById('app'));
